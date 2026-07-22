@@ -1,80 +1,129 @@
 <?php include 'header.php'; ?>
 
-<style>
-    @keyframes antigravity {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-12px); }
-        100% { transform: translateY(0px); }
-    }
-    
-    .floating-element {
-        animation: antigravity 4s ease-in-out infinite;
-    }
-    
-    .title-gradient-home {
-        background: linear-gradient(90deg, #60a5fa, #a78bfa);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-    
-    .search-glass-panel {
-        background: rgba(15, 15, 25, 0.4);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-        border-radius: 24px;
-    }
-    
-    .search-input {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: #ffffff;
-    }
-    
-    .search-input:focus {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: #a78bfa;
-        color: #ffffff;
-        box-shadow: 0 0 15px rgba(167, 139, 250, 0.3);
-    }
-    
-    .search-input::placeholder {
-        color: rgba(255, 255, 255, 0.4);
-    }
-    
-    .btn-gradient-home {
-        background: linear-gradient(90deg, #6366f1, #8b5cf6);
-        border: none;
-        color: white;
-        transition: all 0.3s ease;
-    }
-    
-    .btn-gradient-home:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.5);
-        color: white;
-    }
-</style>
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PHASE 2: HERO SECTION over 3D canvas            -->
+<!-- ═══════════════════════════════════════════════ -->
 
-<div class="container mt-5 pt-5 d-flex flex-column align-items-center justify-content-center" style="min-height: 75vh;">
-    <div class="text-center floating-element w-100" style="max-width: 800px;">
-        <h1 class="display-4 fw-bolder title-gradient-home mb-3">AI Tool Recommendation Portal</h1>
-        <p class="fs-5 mb-5 mx-auto" style="color: rgba(255, 255, 255, 0.7); max-width: 600px;">Discover, compare, and choose the best AI tools for your workflow.</p>
-        
-        <div class="search-glass-panel p-4 p-md-5 mx-auto">
-            <form action="#" method="GET">
-                <div class="mb-4 text-start">
-                    <label for="searchInput" class="form-label text-white fw-semibold fs-5 mb-3">What do you need?</label>
-                    <input type="text" id="searchInput" name="q" class="form-control form-control-lg rounded-pill search-input px-4 py-3" placeholder="e.g. Image generation, Data analysis, Code assistant...">
-                </div>
-                <div class="text-center mt-2">
-                    <button type="submit" class="btn btn-gradient-home rounded-pill px-5 py-3 fs-5 fw-bold w-100">Search Tools</button>
-                </div>
-            </form>
-        </div>
+<main class="relative">
+
+  <!-- Hero Section -->
+  <section class="min-h-screen flex flex-col items-center justify-center px-4 pt-16" id="hero-section">
+
+    <!-- Pointer-events-none wrapper for purely decorative text layer -->
+    <div class="pointer-events-none text-center mb-12 select-none">
+
+      <!-- Eyebrow tag -->
+      <div class="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-8 pointer-events-auto">
+        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse inline-block"></span>
+        <span class="text-xs font-semibold text-white/70 uppercase tracking-widest">Next-Gen AI Discovery</span>
+      </div>
+
+      <!-- Main headline -->
+      <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black leading-none tracking-tight mb-6">
+        <span class="text-gradient">AI Tool</span><br>
+        <span class="text-white">Recommendation</span><br>
+        <span class="text-gradient-cyan">Portal</span>
+      </h1>
+
+      <!-- Sub-headline -->
+      <p class="text-lg sm:text-xl text-white/55 font-light max-w-xl mx-auto leading-relaxed">
+        Discover, compare, and choose the best AI tools for your workflow. Powered by community intelligence and 3D spatial computing.
+      </p>
     </div>
-</div>
+
+    <!-- Search form — pointer events re-activated -->
+    <div class="pointer-events-auto w-full max-w-2xl mx-auto">
+      <form action="tools.php" method="GET" id="hero-search-form"
+            class="backdrop-blur-2xl bg-white/5 border border-white/10 rounded-3xl p-8 shadow-2xl shadow-black/40">
+
+        <!-- Label -->
+        <label for="heroSearchInput" class="block text-white font-semibold text-lg mb-3">
+          What do you need?
+        </label>
+
+        <!-- Input row -->
+        <div class="flex gap-3 flex-col sm:flex-row">
+          <input
+            type="text"
+            id="heroSearchInput"
+            name="q"
+            class="glass-input flex-1"
+            placeholder="e.g. Image generation, Code assistant, Data analysis…"
+            autocomplete="off"
+          >
+          <button type="submit"
+                  class="btn-glow px-8 py-3 rounded-2xl text-base font-bold tracking-wide relative z-10 whitespace-nowrap"
+                  id="hero-search-btn">
+            Search Tools
+          </button>
+        </div>
+
+        <!-- Quick tags -->
+        <div class="flex flex-wrap gap-2 mt-5">
+          <span class="text-white/40 text-xs font-medium self-center">Trending:</span>
+          <?php
+            $tags = ['ChatGPT', 'Midjourney', 'GitHub Copilot', 'Stable Diffusion', 'Claude'];
+            foreach ($tags as $tag):
+          ?>
+          <button type="button"
+                  onclick="document.getElementById('heroSearchInput').value='<?= htmlspecialchars($tag) ?>'; document.getElementById('hero-search-form').submit();"
+                  class="text-xs px-3 py-1 rounded-full glass hover:bg-white/10 transition-all text-white/60 hover:text-white cursor-pointer border-0">
+            <?= htmlspecialchars($tag) ?>
+          </button>
+          <?php endforeach; ?>
+        </div>
+      </form>
+    </div>
+
+    <!-- Stats row -->
+    <div class="pointer-events-auto mt-12 flex gap-8 sm:gap-16 text-center">
+      <?php
+        $stats = [
+          ['2,000+', 'AI Tools'],
+          ['50+', 'Categories'],
+          ['100K+', 'Users'],
+        ];
+        foreach ($stats as [$num, $label]):
+      ?>
+      <div>
+        <div class="text-2xl sm:text-3xl font-black text-gradient"><?= $num ?></div>
+        <div class="text-xs text-white/40 uppercase tracking-widest mt-1"><?= $label ?></div>
+      </div>
+      <?php endforeach; ?>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 pointer-events-none animate-bounce">
+      <svg class="w-5 h-5 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </div>
+  </section>
+
+</main>
+
+<!-- Trigger 3D pulse on search focus -->
+<script>
+  (function() {
+    const searchInput = document.getElementById('heroSearchInput');
+    if (!searchInput) return;
+
+    searchInput.addEventListener('focus', () => {
+      if (window.AAS3D) {
+        window.AAS3D.icoSpeed.x = 0.01;
+        window.AAS3D.icoSpeed.y = 0.012;
+        window.AAS3D.targetColor = new THREE.Color(0x22d3ee);
+      }
+    });
+
+    searchInput.addEventListener('blur', () => {
+      if (window.AAS3D) {
+        window.AAS3D.icoSpeed.x = 0.003;
+        window.AAS3D.icoSpeed.y = 0.004;
+        window.AAS3D.targetColor = new THREE.Color(0x6366f1);
+      }
+    });
+  })();
+</script>
 
 <?php include 'footer.php'; ?>

@@ -1,0 +1,13 @@
+# Ignore the large cloned skills repo (20K+ files)
+agentic-awesome-skills/
+
+# Keep .agents config but ignore the copied skills folder (large)
+.agents/skills/
+
+# PHP & common
+*.log
+*.env
+.env
+.env.local
+node_modules/
+vendor/
